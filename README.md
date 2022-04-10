@@ -49,6 +49,7 @@
         - 참조 : https://github.com/jantimon/html-webpack-plugin#options
     - `new HtmlWebpackPlugin({ template: './index.html' })` 설정 후 다시 빌드
         - dist > index.html을 노드 서버로 돌렸을 때, template이 없는 경우 빈 html이 나오고, template 옵션에서 기존의 index.html을 이용하도록 빌드하면 정상적인 결과가 나온다.
+        - index.html 내부에 <script></script> 태그를 추가하여 js파일을 넣을 필요가 없다. 자동으로 <script></script> 태그를 만들어준다.
 
 6. webpack-dev-server 설치 및 설정
     - 코드를 수정할 때마다 웹팩 명령어를 매 번 실행해줘야한다. 개발하기 쉽게 서버를 띄워주는 역할을 한다. 
@@ -63,6 +64,22 @@
         - 보통 빌드는 production 모드로 하기 때문에 명령어를 `"build": "webpack --mode=production"`로 수정한다.
             - production 모드로 빌드를 하면 코드가 한 줄로 깔끔하게 나타난다. util.js 내부의 함수를 가져와 함수 실행이 평가된 결과 값으로 코드에 존재한다.
 
+7. css 설정
+    - `npm i -D style-loader css-loader` 명령어를 입력한다.
+        - css-loader는 css 파일을 읽어주고, style-loader는 css를 style 태그로 만들어서 head에 넣어준다.
+        - style-loader, css-loader는 webpack.config.js에서 module 속성에 세팅해준다.
+    - webpack.config.js 내 css 확장자에 대한 세팅
+        - use 속성의 값은 배열인데, ['style-loader', 'css-loader']의 값이 들어가며, 역순방향(우측에서 좌측으로)으로 loader가 적용된다.
+    - src 폴더에 style.css 파일을 만들고 적용한다.
+        - style.css 파일 내 body 태그에 스타일 변경 코드를 작성한다.
+        - index.js 파일에 style.css를 import한다.
+        - npm start 명령어를 실행하며 설정된 스타일을 확인해본다.
+        - 리터럴 형식으로 <head> 내부에 <style></style> 이 들어가있다.
+    - src/header.css 파일을 생성하고 적용한다.
+        - header.css 파일 내 h1 태그에 스타일 변경 코드를 작성한다.
+        - index.js 파일에 import한다.
+        - 리터럴 형식으로 <head> 내부에 <style></style> 이 하나 더 추가되어있다.
+        - 이처럼 css 태그가 늘어나면 <style></style> 태그가 늘어난다.
 
 # 참조
 - webpack 프론트엔드 필수 개발환경 셋팅[https://www.youtube.com/watch?v=zal9HVgrMaQ]
