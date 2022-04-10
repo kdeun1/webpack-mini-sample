@@ -90,6 +90,14 @@
     - `npm run build` 명령어로 빌드를 해본다.
         - dist 폴더 내 common.css 파일이 추가되었다. 그리고 dist/index.html을 열어보면 `<link href="common.css" rel="stylesheet" />` 로 파일을 불러오는 것을 알 수 있다.
 
+9. file-loader로 이미지 파일 불러오기
+    - `npm i -D file-loader` 명령어를 실행한다.
+    - 이미지 파일을 import해서 html에 추가해보자
+        - src 폴더 안에 images 폴더를 생성하고 이미지 파일을 하나 넣어놓았다. 그리고 index.js 파일에서 해당 이미지 파일을 logo로 import한다. 그리고 logo를 innerHTML안에 추가한다.
+        - npm start를 하면 해당 파일을 처리할 loader가 없기 때문에 에러가 발생한다. 
+    - webpack.config.js 파일에서 방금 설치한 file-loader를 세팅해보자.
+        - module.rules에 `{ test: /\.(png|jpg)$/, use: ['file-loader'] }`를 추가한다.
+
 # 참조
 - webpack 프론트엔드 필수 개발환경 셋팅[https://www.youtube.com/watch?v=zal9HVgrMaQ]
 
