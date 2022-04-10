@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/kdeun1/webpack-mini-sample/issues"
   },
-  "homepage": "https://github.com/kdeun1/webpack-mini-sample#readme"
+  "homepage": "https://github.com/kdeun1/webpack-mini-sample#readme",
+  "devDependencies": {
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  }
 }
