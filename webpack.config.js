@@ -12,4 +12,10 @@ module.exports = {
             template: './index.html',
         })
     ],
+    devServer: {
+        static: {
+            directory: path.resolve(__dirname, 'dist'),
+        },
+        port: 8989,
+    }
 }
