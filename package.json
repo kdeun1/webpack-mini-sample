@@ -4,6 +4,7 @@
   "description": "프론트엔드 개발을 위한 웹팩 설정",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

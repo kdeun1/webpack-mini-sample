@@ -20,6 +20,24 @@
     - 명령어 실행하면 `node_modules` 폴더와 `package-lock.json` 파일이 생성된다. `node_modules` 폴더가 git에 올라가지 않기 위해 `.gitignore` 파일을 만들어 규칙을 설정해준다. 간단한 .gitignore 파일을 생성하는데 도움을 주는 사이트[https://www.gitignore.io/]는 다음과 같다. vscode, node 환경에서의 규칙을 가져왔다.
     - webpack 설정을 위해 `webpack.config.js` 파일을 생성한다. 웹팩 명령어를 실행했을 때, 파일 내 설정을 자동으로 적용해준다.
 
+4. webpack 설정
+    - `webpack.config.js` 파일에 설정을 입력한다.
+    - `entry`는 시작(진입) 파일이며, 사용하는 모듈들을 파악한다.
+    - `output`은 만들어진 최종 파일을 내보내는 옵션이다.
+        - `filename`은 최종파일 명
+        - `path`는 폴더이며, 이 때, node에서 제공하는 path 모듈(파일이나 폴더의 경로 작업을 위한 유틸)을 활용한다. 현재 경로 하위(__dirname)에 dist라는 폴더를 의미
+    - `src` 폴더를 생성하고 폴더 내부에 `util.js` 파일을 만든다.
+        - utils.js 파일 안에 함수를 만들고 export한다.
+        - index.js 파일을 src 폴더 내부로 넣고, utils.js의 함수들을 활용(import)해본다.
+    - 이제 webpack을 실행해본다.
+        - `package.json` 파일 내 `scripts` 옵션에 각종 명령어를 추가해볼 수 있다.
+        - scripts에 `"build": "webpack"`이라고 적어준다.
+        - terminal에서 `npm run build`를 입력한다. dist 폴더가 생성되었으며, 내부에 main.js 파일이 생성되었다.
+        - 이렇게 2개의 파일을 하나의 파일로 합쳐주는 것이 웹팩의 역할이다.
+    - main.js 파일을 index.html에서 사용
+        - script src 경로를 index.js -> ./dist/main.js로 변경
+        - `npm run build` 후 로컬 서버를 띄운다.
+
 
 # 참조
 - webpack 프론트엔드 필수 개발환경 셋팅[https://www.youtube.com/watch?v=zal9HVgrMaQ]
