@@ -50,6 +50,19 @@
     - `new HtmlWebpackPlugin({ template: './index.html' })` 설정 후 다시 빌드
         - dist > index.html을 노드 서버로 돌렸을 때, template이 없는 경우 빈 html이 나오고, template 옵션에서 기존의 index.html을 이용하도록 빌드하면 정상적인 결과가 나온다.
 
+6. webpack-dev-server 설치 및 설정
+    - 코드를 수정할 때마다 웹팩 명령어를 매 번 실행해줘야한다. 개발하기 쉽게 서버를 띄워주는 역할을 한다. 
+    - `npm i webpack-dev-server -D` 명령어를 입력한다.
+        - `webpack.config.js` 파일에 설치한 라이브러리를 설정해준다. devServer 옵션에 static 옵션에 directory를 입력해주고, port도 설정해준다.
+        - package.json 파일에서 `"start": "webpack serve --open"` 스크립트를 추가한다.
+    - `npm (run) start` 명령어를 입력한다.
+        - 설정한 8989 포트로 페이지가 뜬다. 하지만 컴파일 문제가 발생한다. mode 옵션이 없기 때문인데 `"start": "webpack serve --open --mode=development"` 로 수정한다.
+    - `npm run build` 명령어를 입력한다.
+        - 빌드시 스크립트에도 mode가 없어 컴파일 문제가 발생한다. 빌드 스크립트도 `"build": "webpack --mode=development"`와 같이 수정한다.
+            - 정상적으로 (개발 모드로) 빌드를 하면 dist 폴더 내 main.js 파일이 개발 모드의 불필요한 대량의 코드들이 생성된다. 개발 모드의 코드가 복잡한 이유는 작업 중 에러가 발생했을 때 찾기 수월하기 때문이다.
+        - 보통 빌드는 production 모드로 하기 때문에 명령어를 `"build": "webpack --mode=production"`로 수정한다.
+            - production 모드로 빌드를 하면 코드가 한 줄로 깔끔하게 나타난다. util.js 내부의 함수를 가져와 함수 실행이 평가된 결과 값으로 코드에 존재한다.
+
 
 # 참조
 - webpack 프론트엔드 필수 개발환경 셋팅[https://www.youtube.com/watch?v=zal9HVgrMaQ]
