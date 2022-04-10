@@ -17,7 +17,7 @@
     - webpack은 웹팩의 핵심 패키지라 설치한다.
     - webpack-cli는 커멘드라인으로 webpack을 실행할 수 있게 해준다.
     - 개발할 때만 필요하므로 `--save-dev` 옵션을 사용하였다.
-    - 명령어 실행하면 `node_modules` 폴더와 `package-lock.json` 파일이 생성된다. `node_modules` 폴더가 git에 올라가지 않기 위해 `.gitignore` 파일을 만들어 규칙을 설정해준다. 간단한 .gitignore 파일을 생성하는데 도움을 주는 사이트[https://www.gitignore.io/]는 다음과 같다. vscode, node 환경에서의 규칙을 가져왔다.
+    - 명령어 실행하면 `node_modules` 폴더와 `package-lock.json` 파일이 생성된다. `node_modules` 폴더가 git에 올라가지 않기 위해 `.gitignore` 파일을 만들어 규칙을 설정해준다. 간단한 .gitignore 파일을 생성하는데 도움을 주는 사이트[https://www.gitignore.io/] 는 다음과 같다. vscode, node 환경에서의 규칙을 가져왔다.
     - webpack 설정을 위해 `webpack.config.js` 파일을 생성한다. 웹팩 명령어를 실행했을 때, 파일 내 설정을 자동으로 적용해준다.
 
 4. webpack 설정
@@ -37,6 +37,18 @@
     - main.js 파일을 index.html에서 사용
         - script src 경로를 index.js -> ./dist/main.js로 변경
         - `npm run build` 후 로컬 서버를 띄운다.
+
+5. html-webpack-plugin 설치 및 설정
+    - build 후에 dist폴더 내 js파일만 배포하는게 아니라 html파일도 함께 존재해야 한다. 그래야 dist폴더만 배포할 경우 완벽하게 된다.
+    - `npm i html-webpack-plugin` 명령어를 입력한다.
+        - `webpack.config.js` 파일에서 설치한 html-webpack-plugin을 불러오고, `plugins` 옵션에 `[new HtmlWebpackPlugin()]` 를 추가한다.
+        - `npm run build` 다시 빌드를 해본다. 이제 index.html이 생성된다. 하지만, 우리가 만든 html 파일이 아니다.
+    - HtmlWebpackPlugin은 webpack 번들을 제공하는 HTML 파일생성을 단순화한다. 파라미터에는 객체가 들어가는데 옵션을 설정할 수 있다.
+        - filename: (default: index.html) 생성될 html 파일명
+        - template: 템플릿으로 사용할 html 파일의 상대/절대 경로. 기존에 만들어두었던 파일을 이용해 html을 생성
+        - 참조 : https://github.com/jantimon/html-webpack-plugin#options
+    - `new HtmlWebpackPlugin({ template: './index.html' })` 설정 후 다시 빌드
+        - dist > index.html을 노드 서버로 돌렸을 때, template이 없는 경우 빈 html이 나오고, template 옵션에서 기존의 index.html을 이용하도록 빌드하면 정상적인 결과가 나온다.
 
 
 # 참조
