@@ -4,7 +4,7 @@
 ## 내용 요약
 1. 간단한 html + js 파일 방식
     - index.html과 index.js 파일을 만든다. html 파일 안에 js 스크립트 코드를 넣는 방식은 옛날 방식이다.
-    - <meta charset="UTF-8"> 태그를 사용함으로서, 한글이 나타날 수 있도록 문자셋 속성(해당 HTML 문서의 문자 인코딩 방식)을 UTF-8로 사용한다.
+    - `<meta charset="UTF-8">` 태그를 사용함으로서, 한글이 나타날 수 있도록 문자셋 속성(해당 HTML 문서의 문자 인코딩 방식)을 UTF-8로 사용한다.
     - html과 js를 분리하는 것은 관리적인 측면에서 좋다. 또한, 외부 라이브러리를 cdn 방식으로도 많이 사용했었다.
     - 하지만, JS파일과 html의 종속으로 인해 독립이 안되어 html 의존적이므로, html 없이 js를 정상적으로 작동할 수 없게 되었다. 외부 라이브러리의 추가로 인해 js상의 전역 스페이스가 오염되는 단점이 존재한다. 그리고 외부 라이브러리를 추가할 때마다 HTML에 계속 코드를 추가해야한다.
 
@@ -49,7 +49,7 @@
         - 참조 : https://github.com/jantimon/html-webpack-plugin#options
     - `new HtmlWebpackPlugin({ template: './index.html' })` 설정 후 다시 빌드
         - dist > index.html을 노드 서버로 돌렸을 때, template이 없는 경우 빈 html이 나오고, template 옵션에서 기존의 index.html을 이용하도록 빌드하면 정상적인 결과가 나온다.
-        - index.html 내부에 <script></script> 태그를 추가하여 js파일을 넣을 필요가 없다. 자동으로 <script></script> 태그를 만들어준다.
+        - index.html 내부에 `<script>` 태그를 추가하여 js파일을 넣을 필요가 없다. 자동으로 `<script>` 태그를 만들어준다.
 
 6. webpack-dev-server 설치 및 설정
     - 코드를 수정할 때마다 웹팩 명령어를 매 번 실행해줘야한다. 개발하기 쉽게 서버를 띄워주는 역할을 한다. 
@@ -66,7 +66,7 @@
 
 7. css 설정
     - `npm i -D style-loader css-loader` 명령어를 입력한다.
-        - css-loader는 css 파일을 읽어주고, style-loader는 css를 style 태그로 만들어서 head에 넣어준다.
+        - css-loader는 css 파일을 읽어주고, style-loader는 css를 `<style>` 태그로 만들어서 `<head>`에 넣어준다.
         - style-loader, css-loader는 webpack.config.js에서 module 속성에 세팅해준다.
     - webpack.config.js 내 css 확장자에 대한 세팅
         - use 속성의 값은 배열인데, ['style-loader', 'css-loader']의 값이 들어가며, 역순방향(우측에서 좌측으로)으로 loader가 적용된다.
@@ -74,12 +74,21 @@
         - style.css 파일 내 body 태그에 스타일 변경 코드를 작성한다.
         - index.js 파일에 style.css를 import한다.
         - npm start 명령어를 실행하며 설정된 스타일을 확인해본다.
-        - 리터럴 형식으로 <head> 내부에 <style></style> 이 들어가있다.
+        - 리터럴 형식으로 `<head>` 내부에 `<style>` 이 들어가있다.
     - src/header.css 파일을 생성하고 적용한다.
         - header.css 파일 내 h1 태그에 스타일 변경 코드를 작성한다.
         - index.js 파일에 import한다.
-        - 리터럴 형식으로 <head> 내부에 <style></style> 이 하나 더 추가되어있다.
-        - 이처럼 css 태그가 늘어나면 <style></style> 태그가 늘어난다.
+        - 리터럴 형식으로 `<head>` 내부에 `<style>` 이 하나 더 추가되어있다.
+        - 이처럼 css 태그가 늘어나면 `<style>` 태그가 늘어난다.
+
+8. mini-css-extract-plugin 설치 및 설정
+    - style-loader, css-loader를 사용하여 css 파일을 리터럴 방식으로 html에 추가하는 방식보다는 external 방식(css 파일을 별도로 만들어서 가져오는 형태)를 적용할 수 있다.
+    - `npm i -D mini-css-extract-plugin` 명령어를 입력한다.
+    - webpack.config.js에서 세팅을 해준다.
+        - plugins 속성에 `new MiniCssExtractPlugin({ filename: 'common.css' })`를 추가해준다.
+        - modules.rules에서 css 확장자 규칙을 `test: /\.css$/i`로 변경하고 `use: [MiniCssExtractPlugin.loader, 'css-loader']`로 변경해준다. `<head>` 태그에 `<style>`을 추가하는 방식이 아니라 외부에서 가져오는 역할을 하기 때문에 style-loader 대신에 MiniCssExtractPlugin.loader로 변경하였다.
+    - `npm run build` 명령어로 빌드를 해본다.
+        - dist 폴더 내 common.css 파일이 추가되었다. 그리고 dist/index.html을 열어보면 `<link href="common.css" rel="stylesheet" />` 로 파일을 불러오는 것을 알 수 있다.
 
 # 참조
 - webpack 프론트엔드 필수 개발환경 셋팅[https://www.youtube.com/watch?v=zal9HVgrMaQ]
