@@ -1,0 +1,1 @@
+document.getElementById('root').innerHTML = '웹팩 미니 샘플';
