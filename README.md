@@ -65,7 +65,7 @@
             - production 모드로 빌드를 하면 코드가 한 줄로 깔끔하게 나타난다. util.js 내부의 함수를 가져와 함수 실행이 평가된 결과 값으로 코드에 존재한다.
 
 7. css 설정
-    - `npm i -D style-loader css-loader` 명령어를 입력한다.
+    - `npm i -D style-loader css-loader` 명령어를 입력한다. (internal css 방식)
         - css-loader는 css 파일을 읽어주고, style-loader는 css를 `<style>` 태그로 만들어서 `<head>`에 넣어준다.
         - style-loader, css-loader는 webpack.config.js에서 module 속성에 세팅해준다.
     - webpack.config.js 내 css 확장자에 대한 세팅
@@ -82,7 +82,7 @@
         - 이처럼 css 태그가 늘어나면 `<style>` 태그가 늘어난다.
 
 8. mini-css-extract-plugin 설치 및 설정
-    - style-loader, css-loader를 사용하여 css 파일을 리터럴 방식으로 html에 추가하는 방식보다는 external 방식(css 파일을 별도로 만들어서 가져오는 형태)를 적용할 수 있다.
+    - style-loader, css-loader를 사용하여 css 파일을 리터럴 방식으로 html에 추가하는 방식보다는 css 파일을 별도로 만들어서 가져오는 형태를 적용할 수 있다. (external css 방식)
     - `npm i -D mini-css-extract-plugin` 명령어를 입력한다.
     - webpack.config.js에서 세팅을 해준다.
         - plugins 속성에 `new MiniCssExtractPlugin({ filename: 'common.css' })`를 추가해준다.
@@ -97,6 +97,13 @@
         - npm start를 하면 해당 파일을 처리할 loader가 없기 때문에 에러가 발생한다. 
     - webpack.config.js 파일에서 방금 설치한 file-loader를 세팅해보자.
         - module.rules에 `{ test: /\.(png|jpg)$/, use: ['file-loader'] }`를 추가한다.
+
+10. clean-webpack-plugin로 이전 빌드물 제거하기
+    - `npm i -D clean-webpack-plugin` 명령어를 실행한다.
+    - clean-webpack-plugin은 성공적으로 빌드 시 output.path 디렉토리에 있는 모든 파일과 사용하지 않는 모든 웹팩 자산들을 제거해주는 플러그인이다.
+    - html-webpack-plugin이나 mini-css-extract-plugin과 같은 플러그인과 달리 clean-webpack-plugin은 default export가 설정되어있지 않아 object destructuring해서 가져와야한다.
+        - js파일에서 이미지 파일을 import한다. 그리고 빌드하게 되면 import된 이미지도 같이 빌드된다. 이미지를 교체 후에 빌드하면 이전 이미지도 남아있게 된다. 사용하지 않는 이미지를 import하지 않는다.
+        - 해당 플러그인 설치 후 세팅하고 빌드하면 불필요한 이미지 파일이 사라진다.
 
 # 참조
 - webpack 프론트엔드 필수 개발환경 셋팅[https://www.youtube.com/watch?v=zal9HVgrMaQ]

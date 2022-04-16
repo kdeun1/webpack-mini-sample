@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/kdeun1/webpack-mini-sample#readme",
   "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
     "file-loader": "^6.2.0",
     "mini-css-extract-plugin": "^2.6.0",
