@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack serve --open --mode=development",
     "build": "webpack --mode=production",
+    "build:report": "webpack-bundle-analyzer dist/bundle-stats.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,6 +27,7 @@
     "mini-css-extract-plugin": "^2.6.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.72.0",
+    "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.8.1"
   },

@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     entry : './src/index.js',
@@ -29,6 +30,12 @@ module.exports = {
             filename: 'common.css',
         }),
         new CleanWebpackPlugin(),
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            reportFilename: 'bundle-report.html',
+            openAnalyzer: false, /* 실행 시 분석창을 열지 않음 */
+            generateStatsFile: true,
+        }),
     ],
     devServer: {
         static: {
