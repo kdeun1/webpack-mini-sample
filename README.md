@@ -12,7 +12,7 @@
     - `npm init -y` 실행한다. `-y` 명령어는 모두 yes로 일괄 적용된다.
     - package.json 파일이 생성된다. 외부 라이브러리를 체계적으로 관리하기 위해 node.js 패키지 매니저인 NPM을 도입하였다.
 
-3. webpack 설치
+3. webpack 5 설치
     - `npm install webpack webpack-cli --save-dev`
     - webpack은 웹팩의 핵심 패키지라 설치한다.
     - webpack-cli는 커멘드라인으로 webpack을 실행할 수 있게 해준다.
@@ -63,6 +63,7 @@
             - 정상적으로 (개발 모드로) 빌드를 하면 dist 폴더 내 main.js 파일이 개발 모드의 불필요한 대량의 코드들이 생성된다. 개발 모드의 코드가 복잡한 이유는 작업 중 에러가 발생했을 때 찾기 수월하기 때문이다.
         - 보통 빌드는 production 모드로 하기 때문에 명령어를 `"build": "webpack --mode=production"`로 수정한다.
             - production 모드로 빌드를 하면 코드가 한 줄로 깔끔하게 나타난다. util.js 내부의 함수를 가져와 함수 실행이 평가된 결과 값으로 코드에 존재한다.
+        - webpack 5는 uglifyJs대신 terser-webpack-plugin이 사용되었다. uglify 플러그인이 ES6+이후로 지원하지 않기 때문에 현재 deprecated 상태이며 terser가 선택되었다.
 
 7. css 설정
     - `npm i -D style-loader css-loader` 명령어를 입력한다. (internal css 방식)
@@ -105,7 +106,14 @@
         - js파일에서 이미지 파일을 import한다. 그리고 빌드하게 되면 import된 이미지도 같이 빌드된다. 이미지를 교체 후에 빌드하면 이전 이미지도 남아있게 된다. 사용하지 않는 이미지를 import하지 않는다.
         - 해당 플러그인 설치 후 세팅하고 빌드하면 불필요한 이미지 파일이 사라진다.
 
+11. webpack-bundle-analyzer 사용해보기
+    - `npm i -D webpack-bundle-analyzer` 명령어를 실행한다.
+    - 서버 실행 시 분석창이 매번 열리는데, 이를 설정 값을 통해 원하는 html파일명과 열리지 않게 설정한다.
+
 # 참조
 - webpack 프론트엔드 필수 개발환경 셋팅[https://www.youtube.com/watch?v=zal9HVgrMaQ]
 
 - 웹팩(Webpack) 기본 사용법 (CLI)[https://www.daleseo.com/webpack-basics/]
+
+- webpack bundle analyzer 웹팩 플러그인 설정 방법[https://pusha.tistory.com/entry/webpack-bundle-analyzer-%EC%9B%B9%ED%8C%A9-%ED%94%8C%EB%9F%AC%EA%B7%B8%EC%9D%B8-%EC%84%A4%EC%A0%95-%EB%B0%A9%EB%B2%95]
+
