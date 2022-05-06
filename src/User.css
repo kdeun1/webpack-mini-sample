@@ -4,3 +4,10 @@
     padding: 10px;
     background-color: #4E4E4E;
 }
+
+.user--logo {
+    width: 100px;
+    height: 100px;
+    background: url('./images/icon-add.svg') no-repeat;
+    background-size: cover;
+}

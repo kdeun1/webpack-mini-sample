@@ -1,7 +1,7 @@
 # webpack-mini-sample
 프론트엔드 개발을 위한 웹팩 설정
 
-## 내용 요약
+## 내용 정리
 1. 간단한 html + js 파일 방식
     - index.html과 index.js 파일을 만든다. html 파일 안에 js 스크립트 코드를 넣는 방식은 옛날 방식이다.
     - `<meta charset="UTF-8">` 태그를 사용함으로서, 한글이 나타날 수 있도록 문자셋 속성(해당 HTML 문서의 문자 인코딩 방식)을 UTF-8로 사용한다.
@@ -22,7 +22,8 @@
 
 4. webpack 설정
     - `webpack.config.js` 파일에 설정을 입력한다.
-    - `entry`는 시작(진입) 파일이며, 사용하는 모듈들을 파악한다.
+    - `entry`는 웹팩에서 웹 자원을 변환하기 위해 필요한 최초 시작(진입)점이자 자바스크립트 파일 경로이다.
+        - 엔트리 포인트는 여러 개가 될 수도 있다. 엔트리 포인트를 분리하는 경우는 SPA가 아닌 특정 페이지로 진입했을 때, 서버에서 해당 정보를 내려주는 형태의 MPA(멀티 페이지 어플리케이션)에 적합하다.
     - `output`은 만들어진 최종 파일을 내보내는 옵션이다.
         - `filename`은 최종파일 명
         - `path`는 폴더이며, 이 때, node에서 제공하는 path 모듈(파일이나 폴더의 경로 작업을 위한 유틸)을 활용한다. 현재 경로 하위(__dirname)에 dist라는 폴더를 의미
@@ -67,7 +68,8 @@
 
 7. css 설정
     - `npm i -D style-loader css-loader` 명령어를 입력한다. (internal css 방식)
-        - css-loader는 css 파일을 읽어주고, style-loader는 css를 `<style>` 태그로 만들어서 `<head>`에 넣어준다.
+        - css-loader는 css 파일을 자바스크립트 코드로 변환하여 읽을 수 있게 한다.
+        - style-loader는 자바스크립트로 변경된 스타일시트를 동적으로 돔에 추가해준다. 한마디로 css를 `<style>` 태그로 만들어서 `<head>`에 넣어준다. 이 때, css-loader와 함께 사용된다. 번들된 css를 CSSOM으로 변경시킨다.
         - style-loader, css-loader는 webpack.config.js에서 module 속성에 세팅해준다.
     - webpack.config.js 내 css 확장자에 대한 세팅
         - use 속성의 값은 배열인데, ['style-loader', 'css-loader']의 값이 들어가며, 역순방향(우측에서 좌측으로)으로 loader가 적용된다.
@@ -93,6 +95,7 @@
 
 9. file-loader로 이미지 파일 불러오기
     - `npm i -D file-loader` 명령어를 실행한다.
+    - webpack에서 실제 사용하는 파일을 출력 폴더 밑에 복사본을 만든다.
     - 이미지 파일을 import해서 html에 추가해보자
         - src 폴더 안에 images 폴더를 생성하고 이미지 파일을 하나 넣어놓았다. 그리고 index.js 파일에서 해당 이미지 파일을 logo로 import한다. 그리고 logo를 innerHTML안에 추가한다.
         - npm start를 하면 해당 파일을 처리할 loader가 없기 때문에 에러가 발생한다. 
@@ -110,6 +113,30 @@
     - `npm i -D webpack-bundle-analyzer` 명령어를 실행한다.
     - 서버 실행 시 분석창이 매번 열리는데, 이를 설정 값을 통해 원하는 html파일명과 열리지 않게 설정한다.
 
+12. Asset Modules 구성하기 (webpack 5)
+    - 애셋 모듈은 로더를 추가로 구성하지 않아도 애셋 파일(폰트, 아이콘 등)을 사용할 수 있도록 해주는 모듈이다. Asset Modules는 Asset 파일들을 처리하는 방식들을 모아놓은 모듈이고, 정의하는 방식에 따라 브라우저가 한 번에 다운로드 하는 파일의 개수, 파일의 용량을 결정한다.
+    - webpack 5 이전에는 아래의 로더를 사용했다.
+        - raw-loader : 파일을 문자열로 그대로 자바스크립트로 가져온다.
+        - file-loader : 모듈의 내용을 그대로 복사해서 출력 폴더 밑에 복사한다.
+        - url-loader : 파일의 크기가 limit 값보다 작은 경우 dataURI 형식으로 번들 파일의 인라인으로 내용으로 추가된다. 파일 크기가 큰 경우 다른로더가 처리할 수 있도록 fallback 옵션을 제공한다. fallback 옵션을 입력하지 않으면 file-loader가 처리한다.
+    - 위의 로더를 대체하기 위해서 애셋 모듈에는 4가지 새로운 모듈이 추가되었다.
+        - asset/resource
+            - 별도의 파일을 내보내고 URL을 추출한다. 다시 말해서 빌드 후 asset 파일을 출력 디렉토리로 내부내고, 해당 경로를 번들에 추가한다. v5 이전에는 file-loader를 사용해서 처리하였다.
+            - 이미지명을 해시로 저장하여 이름이 같은 채로 캐싱된 것을 불러오는 오류를 방지할 수 있다. 해시로 캐시 무력화를 없애기 위함이다.
+        - asset/inline
+            - 애셋의 data URI를 내보낸다. v5 이전에는 url-loader를 사용하여 처리하였다.
+            - Data URI Scheme 방식을 사용하여 리소스를 외부에서 가져오지 않고, 파일 자체를 문서에 임베드시킨다.
+            - base64로 인코딩되어 원본 파일보다 용량이 커진다. 또한, 긴 문자열로 인해 소스 가독성이 떨어지며, 브라우저에 따라 문자열 길이 제한때문에 용량이 큰 이미지는 처리가 어렵다.
+        - asset/source
+            - 애셋의 소스코드를 내보낸다. v5 이전에는 raw-loader를 사용하여 처리하였다.
+        - asset
+            - data URI와 별도의 파일 내보내기 중 자동으로 선택한다. v5 이전에는 애셋 크기 제한(limit)가 있는 url-loader를 사용하였다.
+            - v4의 url-loader에 limit 용량이 넘어가면 fallback 효과가 발동되어 file-loader로 넘어가는 것처럼, asset에 parser.dataUrlCondition.maxSize 옵션을 활용하여 fallback 효과를 줄 수 있다.
+    - 버그 발견
+        - CleanWebpackPlugin을 사용한다.
+        - module.rules에 asset/resource type과 함께 generator를 사용한다. 이 때, filename에 있는 static 폴더가 남아있는 상태에서 다시 빌드를 한다면 -4048 에러가 발생한다.
+
+
 # 참조
 - webpack 프론트엔드 필수 개발환경 셋팅[https://www.youtube.com/watch?v=zal9HVgrMaQ]
 
@@ -117,3 +144,6 @@
 
 - webpack bundle analyzer 웹팩 플러그인 설정 방법[https://pusha.tistory.com/entry/webpack-bundle-analyzer-%EC%9B%B9%ED%8C%A9-%ED%94%8C%EB%9F%AC%EA%B7%B8%EC%9D%B8-%EC%84%A4%EC%A0%95-%EB%B0%A9%EB%B2%95]
 
+- 웹팩 Asset Modules[https://tecoble.techcourse.co.kr/post/2021-08-30-webpack-asset-modules/]
+
+- 프론트엔드 개발 완경 공부 6 자주 사용되는 로더[https://velog.io/@jakeseo_me/%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD-%EA%B3%B5%EB%B6%80-6-%EC%9E%90%EC%A3%BC-%EC%82%AC%EC%9A%A9%EB%90%98%EB%8A%94-%EB%A1%9C%EB%8D%94]
