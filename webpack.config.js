@@ -1,5 +1,4 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -7,7 +6,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = {
     entry : './src/index.js',
     output: {
-        // clean: true,
+        clean: true,
         filename: 'main.js',
         path: path.resolve(__dirname, 'dist'),
     },
@@ -45,7 +44,6 @@ module.exports = {
         ],
     },
     plugins: [
-        new CleanWebpackPlugin(),
         new BundleAnalyzerPlugin({
             analyzerMode: 'static',
             reportFilename: 'bundle-report.html',
