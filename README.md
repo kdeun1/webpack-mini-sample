@@ -133,8 +133,8 @@
             - data URI와 별도의 파일 내보내기 중 자동으로 선택한다. v5 이전에는 애셋 크기 제한(limit)가 있는 url-loader를 사용하였다.
             - v4의 url-loader에 limit 용량이 넘어가면 fallback 효과가 발동되어 file-loader로 넘어가는 것처럼, asset에 parser.dataUrlCondition.maxSize 옵션을 활용하여 fallback 효과를 줄 수 있다.
     - 버그 발견
-        - CleanWebpackPlugin을 사용한다.
-        - module.rules에 asset/resource type과 함께 generator를 사용한다. 이 때, filename에 있는 static 폴더가 남아있는 상태에서 다시 빌드를 한다면 -4048 에러가 발생한다.
+        - webpack5 환경에서 CleanWebpackPlugin을 사용 + asset modules의 generator를 사용한다. 이 때, filename에 있는 static 폴더가 남아있는 상태에서 다시 빌드를 한다면 -4048 에러가 발생한다.
+        - CleanWebpackPlugin을 사용하지 않고, webpack 5의 output.clean 옵션을 사용하면 해당 버그가 발생하지 않는다. CleanWebpackPlugin을 output.clean 옵션으로 대체하겠다.
 
 
 # 참조
