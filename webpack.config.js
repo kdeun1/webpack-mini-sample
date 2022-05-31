@@ -10,8 +10,21 @@ module.exports = {
         filename: 'main.js',
         path: path.resolve(__dirname, 'dist'),
     },
+    target : ['web', 'es5'], // IE에서 사용하기 위함
     module: {
         rules: [
+            {
+                test: /\.m?js$/,
+                exclude: path.resolve(__dirname, 'node_modules'),
+                // exclude: /node_modules/,
+                // use: {
+                //   loader: 'babel-loader',
+                //   options: {
+                //     presets: ['@babel/preset-env']
+                //   }
+                // },
+                use: 'babel-loader',
+            },
             {
                 test: /\.css$/i,
                 exclude: /node_modules/,
