@@ -1,0 +1,45 @@
+{
+    "presets": [
+    //   [
+    //     // 타겟 브라우저에 필요한 구문 변경과 브라우저 폴리필을 제공하는 프리셋
+    //     "@babel/preset-env",
+    //     {
+    //       /* 
+    //        *  브라우저환경의 최소버전을 명시적으로 적는다.
+    //        *  브라우저의 점유율도 설정할 수 있다.
+    //        */
+    //        "targets": {
+    //             "chrome": "58",
+    //             "ie": "11"
+    //         },
+    //       /*
+    //        *  폴리필의 삽입 방식을 설정하는 옵션이다.
+    //        *  usage: 실제 사용한 폴리필만 삽입한다.
+    //        *  entry: core-js/stable과 regenerator-runtime/runtime 모듈을 전역 스코프에 삽입한 경우만 가능
+    //        *  이 옵션은 babel v7에서 사라졌다.
+    //        */
+    //     //   "useBuiltIns": "usage",
+    //       /*
+    //        *  corejs옵션은 useBuiltIns옵션과 함께 사용해야한다.
+    //        *  삽입되는 core-js 모듈의 버전을 설정한다.
+    //        *  default는 2버전이지만, 업뎃이 중단되었으므로 3이상을 사용한다.
+    //        */
+    //     //   "corejs": {
+    //     //       "version": 3,
+    //     //       "proposals": true
+    //     //   }
+    //       "modules": "cjs"
+    //     }
+    //   ]
+        ["@babel/preset-env"]
+    ],
+    "plugins": [
+        [
+            "@babel/plugin-transform-runtime",
+            {
+                "corejs": 3
+                // "proposals": true
+            }
+        ]
+    ]
+  }
