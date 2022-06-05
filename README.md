@@ -214,7 +214,6 @@
         - 바벨 설정 후 웹팩빌드를 하더라도 IE에서 오류가 발생한다. 이는 화살표 함수가 남아있기 때문이다.
             - webpack v5부터 트랜스파일링을 기본적으로 ES6로 한다. 그렇다면 babel이 아니라 webpack의 설정의 target 옵션을 활용해야한다. webpack.config.js 파일의 target을 ['web', 'es5']로 설정해준다.
             - 참고 : ES11같은 오래된 브라우저에서의 지원[https://webpack.js.org/migrate/5/#need-to-support-an-older-browser-like-ie-11]
-        - 예외가 발생했지만 catch할 수 없다는 오류가 발생한다. 이는 Promise의 폴리필이 제대로 되지 않아서 생기지 않나 생각이 든다.
 
 
 # 참조
@@ -226,7 +225,7 @@
 
 - 웹팩 Asset Modules[https://tecoble.techcourse.co.kr/post/2021-08-30-webpack-asset-modules/]
 
-- 프론트엔드 개발 완경 공부 6 자주 사용되는 로더[https://velog.io/@jakeseo_me/%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD-%EA%B3%B5%EB%B6%80-6-%EC%9E%90%EC%A3%BC-%EC%82%AC%EC%9A%A9%EB%90%98%EB%8A%94-%EB%A1%9C%EB%8D%94]
+- 프론트엔드 개발 환경 공부 6 자주 사용되는 로더[https://velog.io/@jakeseo_me/%ED%94%84%EB%A1%A0%ED%8A%B8%EC%97%94%EB%93%9C-%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD-%EA%B3%B5%EB%B6%80-6-%EC%9E%90%EC%A3%BC-%EC%82%AC%EC%9A%A9%EB%90%98%EB%8A%94-%EB%A1%9C%EB%8D%94]
 
 - Babel7과 corejs3 설정으로 전역 오염없는 폴리필 사용하기[https://tech.kakao.com/2020/12/01/frontend-growth-02/]
 
